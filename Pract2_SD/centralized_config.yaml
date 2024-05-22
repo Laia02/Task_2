@@ -1,0 +1,12 @@
+# Example YAML file
+
+master:
+  ip: localhost
+  port: 32770
+
+slaves:
+  - ip: localhost
+    port: 32771
+  - ip: localhost
+    port: 32772
+  # Add more slave configurations as needed

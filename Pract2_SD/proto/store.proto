@@ -1,0 +1,109 @@
+syntax = "proto3";
+
+package distributedstore;
+
+
+import "google/protobuf/empty.proto";
+
+// to compile
+// python -m grpc_tools.protoc -I./ --python_out=. --grpc_python_out=. --pyi_out=. ./store.proto
+
+service KeyValueStore {
+
+  rpc put(PutRequest) returns (PutResponse);
+
+  rpc get(GetRequest) returns (GetResponse);
+
+  rpc slowDown(SlowDownRequest) returns (SlowDownResponse);
+
+  rpc restore(RestoreRequest) returns (RestoreResponse);
+
+  rpc canCommit(google.protobuf.Empty) returns (CanCommitResponse);
+
+  rpc doCommit(DoCommitRequest) returns (google.protobuf.Empty);
+
+  rpc askVote ( AskRequest ) returns (AskResponse);
+
+  rpc discover (DiscRequest) returns (DiscResponse);
+
+  rpc addSlave (slaveRequest) returns (slaveResponse);
+
+  rpc addPorts (portRequest) returns (Empty);
+
+}
+
+message PutRequest {
+  string key = 1;
+  string value = 2;
+}
+
+message PutResponse {
+  bool success = 1;
+}
+
+message GetRequest {
+  string key = 1;
+}
+
+message GetResponse {
+  string value = 1;
+  bool found = 2;
+}
+
+message SlowDownRequest {
+  int32 seconds = 1;
+}
+
+message SlowDownResponse {
+  bool success = 1;
+}
+
+message RestoreRequest {}
+
+message RestoreResponse {
+  bool success = 1;
+}
+
+message CanCommitRequest{}
+
+message CanCommitResponse{
+  bool success = 1;
+}
+
+message DoCommitRequest{
+  string key = 1;
+  string value = 2;  
+}
+
+message DoCommitResponse{}
+
+message AskRequest{
+  string key = 1;
+}
+
+message AskResponse{
+  int32 weight = 1;
+  string value = 2;
+}
+
+message DiscRequest {
+  int32 port = 1;
+}
+
+message DiscResponse {
+  string ports = 1;
+}
+message slaveRequest {
+  int32 port = 1;
+}
+
+message slaveResponse {
+  bool success = 1;
+}
+
+message portRequest{
+  string ports = 1;
+}
+
+
+message Empty {}

@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package storage;
+
+service StorageService {
+  rpc SaveValue (Value) returns (Empty) {}
+  rpc GetValue (Key) returns (Value) {}
+  rpc GetAllValues (Empty) returns (ValueList) {}
+}
+
+message Value {
+  string key = 1;
+  string data = 2;
+}
+
+message Key {
+  string key = 1;
+}
+
+message Empty {}
+
+message ValueList {
+  repeated Value values = 1;
+}
